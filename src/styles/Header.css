@@ -1,0 +1,15 @@
+.HeaderBar {
+    background-color: #3f51b5 !important;
+}
+
+.navbar-brand, .nav-link {
+    color: #FFF !important;
+}
+
+.navbar-toggler {
+    background-color: #FFF;
+}
+
+.nav-link:hover, .navbar-toggler:hover {
+    opacity: 0.75;
+}
