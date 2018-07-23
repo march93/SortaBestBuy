@@ -13,3 +13,9 @@
 .nav-link:hover, .navbar-toggler:hover {
     opacity: 0.75;
 }
+
+.cart-badge {
+    border: 1px solid #FFF;
+    position: relative;
+    top: -1px;
+}
