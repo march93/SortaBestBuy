@@ -9,7 +9,7 @@ app.get('/api/getProducts', (req, res) => {
     axios.get('http://api.walmartlabs.com/v1/search', {
         params: {
             query: req.query.searchValue,
-            numItems: 25,
+            numItems: 24,
             format: 'json',
             apiKey: WalmartAPI,
         }
