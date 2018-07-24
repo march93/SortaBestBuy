@@ -14,6 +14,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import InfoIcon from '@material-ui/icons/Info';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import StarRatings from 'react-star-ratings';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 
 const mapStateToProps = state => {
@@ -152,6 +154,21 @@ class Products extends Component {
         }
     }
 
+    getInfo(id) {
+        if (id) {
+            // Navigate to product page
+            // No need to redirect, easier to navigate back since there's a history stack trace
+            this.props.history.push('/product-info/' + id);
+        } else {
+            // Toast error pop up if ID doesn't exist
+            if (! toast.isActive(this.toastId)) {
+                this.toastId = toast.error("Sorry, no product info at this time!", {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+            }
+        }
+    }
+
     render() {
         return (
             <div className="Products">
@@ -225,7 +242,9 @@ class Products extends Component {
                                             <FavoriteIcon />
                                         </IconButton>
                                         <IconButton aria-label="Share">
-                                            <InfoIcon />
+                                            <InfoIcon
+                                                onClick={this.getInfo.bind(this, card.itemId)}
+                                            />
                                         </IconButton>
                                         <button className="btn btn-primary shopping-cart-add">
                                             <AddShoppingCartIcon />
@@ -263,6 +282,7 @@ class Products extends Component {
                         <span className="no-items">No Items to display</span>
                     </div>
                 }
+                <ToastContainer autoClose={3000} />
             </div>
         );
     }
