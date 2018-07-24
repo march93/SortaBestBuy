@@ -16,7 +16,7 @@
 
 .ProductList {
     width: 90%;
-    margin: 5px auto 100px auto;
+    margin: 5px auto 50px auto;
     display: flex;
     flex-wrap: wrap;
 }
@@ -67,6 +67,13 @@
 .shopping-cart-add {
     display: flex;
     margin-left: auto !important;
+}
+
+.upper-buttons, .lower-buttons {
+    width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 30px auto;
 }
 
 .NoProducts {
