@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../styles/Products.css';
 import axios from 'axios';
 import { connect } from "react-redux";
-import { searchItems, changePage, blockNext } from '../actions/Actions';
+import { searchValue, searchItems, changePage, blockNext } from '../actions/Actions';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -18,6 +18,7 @@ import StarRatings from 'react-star-ratings';
 
 const mapStateToProps = state => {
     return { 
+        searchedValue: state.searchedValue,
         searchItemsList: state.searchItemsList,
         startPage: state.startPage,
         isNextBlocked: state.isNextBlocked
@@ -26,6 +27,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        searchValue: value => dispatch(searchValue(value)),
         searchItems: searchedItems => dispatch(searchItems(searchedItems)),
         changePage: page => dispatch(changePage(page)),
         blockNext: block => dispatch(blockNext(block))
@@ -72,6 +74,9 @@ class Products extends Component {
             }
           })
             .then((response) => {
+                // Update search value
+                this.props.searchValue(this.state.searchValue);
+
                 // Update searched items list in Redux Store
                 this.props.searchItems(response.data.items);
 
@@ -85,14 +90,14 @@ class Products extends Component {
 
     // Get previous page results
     getPrevPage() {
-        if (!this.nextDisable) {
+        if (!this.prevDisable) {
             // Prevent double clicks
-            this.nextDisable = true;
+            this.prevDisable = true;
 
             // Call API to get the next set of results
             axios.get('/api/getProducts', {
                 params: {
-                  searchValue: this.state.searchValue,
+                  searchValue: this.props.searchedValue, // Use Redux stored search value to avoid wrong value from onChangeName
                   startPage: this.props.startPage - 24
                 }
               })
@@ -107,7 +112,7 @@ class Products extends Component {
                     this.props.blockNext(response.data.nextPageDisable);
 
                     // Unblock next page blocker
-                    this.nextDisable = false;
+                    this.prevDisable = false;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -124,7 +129,7 @@ class Products extends Component {
             // Call API to get the next set of results
             axios.get('/api/getProducts', {
                 params: {
-                  searchValue: this.state.searchValue,
+                  searchValue: this.props.searchedValue, // Use Redux stored search value to avoid wrong value from onChangeName
                   startPage: this.props.startPage + 24
                 }
               })
@@ -152,7 +157,15 @@ class Products extends Component {
             <div className="Products">
                 <div className="SearchHeader">
                     <div className="form-group has-feedback has-feedback-left">
-                        <input type="text" className="form-control" id="search-value" placeholder="Search Products" onKeyPress={this.isEnterKey.bind(this)} onChange={this.onChangeName.bind(this)} />
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="search-value"
+                            defaultValue={this.props.searchedValue}
+                            placeholder="Search Products"
+                            onKeyPress={this.isEnterKey.bind(this)}
+                            onChange={this.onChangeName.bind(this)} 
+                        />
                         <button type="submit" className="btn btn-primary search-button" onClick={this.getProducts.bind(this)}>Search</button>
                     </div>
                 </div>
