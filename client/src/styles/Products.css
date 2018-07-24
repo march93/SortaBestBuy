@@ -69,3 +69,9 @@
     font-size: 30px;
     font-weight: bold;
 }
+
+@media only screen and (max-width: 889px) {
+    .form-group {
+        width: 90%;
+    }
+}
