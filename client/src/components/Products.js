@@ -46,6 +46,13 @@ class Products extends Component {
         });
     }
 
+    // Check if Enter key is pressed inside input element
+    isEnterKey(event) {
+        if (event.key === "Enter") {
+            this.getProducts();
+        }
+    }
+
     // Get list of products from API
     getProducts() {
         axios.get('/api/getProducts', {
@@ -69,7 +76,7 @@ class Products extends Component {
             <div className="Products">
                 <div className="SearchHeader">
                     <div className="form-group has-feedback has-feedback-left">
-                        <input type="text" className="form-control" id="search-value" placeholder="Search Products" onChange={this.onChangeName.bind(this)} />
+                        <input type="text" className="form-control" id="search-value" placeholder="Search Products" onKeyPress={this.isEnterKey.bind(this)} onChange={this.onChangeName.bind(this)} />
                         <button type="submit" className="btn btn-primary search-button" onClick={this.getProducts.bind(this)}>Search</button>
                     </div>
                 </div>
@@ -83,8 +90,8 @@ class Products extends Component {
                                     className="product-header"
                                 />
                                 <CardContent className="product-content">
-                                    <Typography variant="subheading">
-                                        {"$" + (card.msrp ? card.msrp : card.salePrice)}
+                                    <Typography variant="subheading" className="product-price">
+                                        {"$" + (card.salePrice ? card.salePrice : card.msrp)}
                                     </Typography>
                                     <Typography variant="subheading" color="textSecondary">
                                         <StarRatings
