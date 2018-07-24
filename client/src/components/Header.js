@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/Header.css';
+import { Link } from 'react-router-dom'
 
 class Header extends Component {
   render() {
@@ -13,13 +14,13 @@ class Header extends Component {
                 <div className="collapse navbar-collapse" id="navbarText">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="/">Search Products <span className="sr-only">(current)</span></a>
+                            <Link to="/" className="nav-link">Search Products</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="cart">Cart <span className="badge cart-badge">0</span></a>
+                            <Link to="/cart" className="nav-link">Cart <span className="badge cart-badge">0</span></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="checkout">Checkout</a>
+                            <Link to="/checkout" className="nav-link">Checkout</Link>
                         </li>
                     </ul>
                 </div>
