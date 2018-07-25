@@ -10,8 +10,24 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import ReactHtmlParser from 'react-html-parser';
 import StarRatings from 'react-star-ratings';
+import { connect } from "react-redux";
+import { addToCart, removeFromCart } from '../actions/Actions';
+
+const mapStateToProps = state => {
+    return { 
+        cartItems: state.cartItems
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addToCart: item => dispatch(addToCart(item)),
+        removeFromCart: item => dispatch(removeFromCart(item))
+    };
+};
 
 class Info extends Component {
     constructor(props) {
@@ -42,6 +58,22 @@ class Info extends Component {
                     position: toast.POSITION.BOTTOM_LEFT
                 });
             });
+    }
+
+    addToShoppingCart(id) {
+        this.props.addToCart(id);
+
+        this.toastId = toast.success("Item added to shopping cart!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    }
+
+    removeFromShoppingCart(id) {
+        this.props.removeFromCart(id);
+
+        this.toastId = toast.success("Item removed from shopping cart!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
     }
 
     render() {
@@ -98,13 +130,24 @@ class Info extends Component {
                                 >
                                     <Link to="/">Back To Search</Link>
                                 </button>
-                                <button 
-                                    type="submit"
-                                    className="btn btn-primary add-to-cart"
-                                >
-                                    <AddShoppingCartIcon />
-                                    <span>Add To Cart</span>
-                                </button>
+                                {this.props.cartItems.includes(item[0].itemId) ?
+                                    <button 
+                                        className="btn btn-primary btn-danger remove-from-cart"
+                                        onClick={this.removeFromShoppingCart.bind(this, item[0].itemId)}
+                                        >
+                                        <RemoveShoppingCartIcon />
+                                        <span>Remove From Shopping Cart</span>
+                                    </button>
+                                    :
+                                    <button 
+                                        type="submit"
+                                        className="btn btn-primary add-to-cart"
+                                        onClick={this.addToShoppingCart.bind(this, item[0].itemId)}
+                                        >
+                                        <AddShoppingCartIcon />
+                                        <span>Add To Cart</span>
+                                    </button>
+                                }
                             </CardActions>
                         </Card>
                     </div>
@@ -119,4 +162,6 @@ class Info extends Component {
     }
 }
 
-export default Info;
+const InfoPage = connect(mapStateToProps, mapDispatchToProps)(Info);
+
+export default InfoPage;
