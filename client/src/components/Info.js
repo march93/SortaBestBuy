@@ -127,7 +127,7 @@ class Info extends Component {
                                 <button
                                     type="submit"
                                     className="btn btn-primary back-button"
-                                >
+                                    >
                                     <Link to="/">Back To Search</Link>
                                 </button>
                                 {this.props.cartItems.filter(product => (product.id === item[0].itemId)).length > 0 ?

@@ -1,0 +1,25 @@
+.cart-title {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+.EmptyCart {
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.EmptyCart button > a {
+    color: #FFF;
+}
+
+.EmptyCart button > a:hover {
+    text-decoration: none;
+}
+
+.no-item {
+    font-size: 30px;
+    font-weight: bold;
+}
