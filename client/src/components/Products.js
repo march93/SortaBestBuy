@@ -170,7 +170,7 @@ class Products extends Component {
     }
 
     addToShoppingCart(id) {
-        this.props.addToCart(id);
+        this.props.addToCart({id: id, quantity: 1});
 
         this.toastId = toast.success("Item added to shopping cart!", {
             position: toast.POSITION.BOTTOM_CENTER
@@ -262,7 +262,7 @@ class Products extends Component {
                                                 onClick={this.getInfo.bind(this, card.itemId)}
                                             />
                                         </IconButton>
-                                        {this.props.cartItems.includes(card.itemId) ?
+                                        {this.props.cartItems.filter(item => (item.id === card.itemId)).length > 0 ?
                                             <button 
                                                 className="btn btn-primary btn-danger shopping-cart-delete"
                                                 onClick={this.removeFromShoppingCart.bind(this, card.itemId)}

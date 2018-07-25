@@ -23,7 +23,7 @@ const rootReducer = (state = initialState, action) => {
         case REMOVE_FROM_CART:
             // Return shallow copy of current array without the matching item ID 
             return { ...state, cartItems: [...state.cartItems.filter((elem, idx) => {
-                return elem !== action.payload;
+                return elem.id !== action.payload;
             })]}
         default:
             return state;
