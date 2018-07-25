@@ -1,0 +1,10 @@
+.NoInfo {
+    width: 90%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.no-item {
+    font-size: 30px;
+    font-weight: bold;
+}

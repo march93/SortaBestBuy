@@ -49,10 +49,6 @@ class Products extends Component {
         this.nextDisable = false;
     }
 
-    componentDidMount() {
-        console.log(this.props.searchItemsList);
-    }
-
     // Set search value on change
     onChangeName(event) {
         this.setState({
