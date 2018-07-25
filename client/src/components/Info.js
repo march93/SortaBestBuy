@@ -50,26 +50,28 @@ class Info extends Component {
             return null;
         }
 
+        const item = this.state.productInfo;
+
         return (
             <div className="Info">
-                {this.state.productInfo.length > 0 ?
+                {item.length > 0 ?
                     <div>
                         <Card className="item-info">
                             <CardMedia
                                 className="item-photo"
-                                image={this.state.productInfo[0].largeImage}
-                                title={this.state.productInfo[0].name}
+                                image={item[0].largeImage}
+                                title={item[0].name}
                             />
                             <CardContent className="item-content">
                                 <Typography gutterBottom variant="headline" component="h2">
-                                    {this.state.productInfo[0].name}
+                                    {item[0].name}
                                 </Typography>
                                 <Typography variant="subheading" className="item-price">
-                                    {"$" + (this.state.productInfo[0].salePrice ? this.state.productInfo[0].salePrice : this.state.productInfo[0].msrp)}
+                                    {"$" + (item[0].salePrice ? item[0].salePrice : item[0].msrp)}
                                 </Typography>
                                 <Typography variant="subheading" color="textSecondary">
                                     <StarRatings
-                                        rating={this.state.productInfo[0].customerRating ? parseInt(this.state.productInfo[0].customerRating) : 0}
+                                        rating={item[0].customerRating ? parseInt(item[0].customerRating) : 0}
                                         starRatedColor="blue"
                                         numberOfStars={5}
                                         starDimension="20px"
@@ -80,13 +82,13 @@ class Info extends Component {
                                     Description
                                 </Typography>
                                 <Typography component="span" className="item-short-description">
-                                    {ReactHtmlParser(this.state.productInfo[0].shortDescription)}
+                                    {ReactHtmlParser(item[0].shortDescription)}
                                 </Typography>
                                 <Typography gutterBottom variant="headline" component="h3">
                                     Item Details
                                 </Typography>
                                 <Typography component="span" className="item-long-description">
-                                    {ReactHtmlParser(this.state.productInfo[0].longDescription)}
+                                    {ReactHtmlParser(item[0].longDescription)}
                                 </Typography>
                             </CardContent>
                             <CardActions className="item-buttons">
