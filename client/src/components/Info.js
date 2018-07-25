@@ -11,6 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ReactHtmlParser from 'react-html-parser';
+import StarRatings from 'react-star-ratings';
 
 class Info extends Component {
     constructor(props) {
@@ -62,6 +63,15 @@ class Info extends Component {
                             <CardContent className="item-content">
                                 <Typography gutterBottom variant="headline" component="h2">
                                     {this.state.productInfo[0].name}
+                                </Typography>
+                                <Typography variant="subheading" color="textSecondary">
+                                    <StarRatings
+                                        rating={this.state.productInfo[0].customerRating ? parseInt(this.state.productInfo[0].customerRating) : 0}
+                                        starRatedColor="blue"
+                                        numberOfStars={5}
+                                        starDimension="20px"
+                                        name='rating'
+                                    />
                                 </Typography>
                                 <Typography gutterBottom variant="headline" component="h3">
                                     Description
