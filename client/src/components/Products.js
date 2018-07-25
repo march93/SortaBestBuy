@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../styles/Products.css';
 import axios from 'axios';
 import { connect } from "react-redux";
-import { searchValue, searchItems, changePage, blockNext } from '../actions/Actions';
+import { searchValue, searchItems, changePage, blockNext, addToCart, removeFromCart } from '../actions/Actions';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import InfoIcon from '@material-ui/icons/Info';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import StarRatings from 'react-star-ratings';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -23,7 +24,8 @@ const mapStateToProps = state => {
         searchedValue: state.searchedValue,
         searchItemsList: state.searchItemsList,
         startPage: state.startPage,
-        isNextBlocked: state.isNextBlocked
+        isNextBlocked: state.isNextBlocked,
+        cartItems: state.cartItems
     };
 };
 
@@ -32,7 +34,9 @@ const mapDispatchToProps = dispatch => {
         searchValue: value => dispatch(searchValue(value)),
         searchItems: searchedItems => dispatch(searchItems(searchedItems)),
         changePage: page => dispatch(changePage(page)),
-        blockNext: block => dispatch(blockNext(block))
+        blockNext: block => dispatch(blockNext(block)),
+        addToCart: item => dispatch(addToCart(item)),
+        removeFromCart: item => dispatch(removeFromCart(item))
     };
 };
 
@@ -165,6 +169,22 @@ class Products extends Component {
         }
     }
 
+    addToShoppingCart(id) {
+        this.props.addToCart(id);
+
+        this.toastId = toast.success("Item added to shopping cart!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    }
+
+    removeFromShoppingCart(id) {
+        this.props.removeFromCart(id);
+
+        this.toastId = toast.success("Item removed from shopping cart!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    }
+
     render() {
         return (
             <div className="Products">
@@ -242,10 +262,23 @@ class Products extends Component {
                                                 onClick={this.getInfo.bind(this, card.itemId)}
                                             />
                                         </IconButton>
-                                        <button className="btn btn-primary shopping-cart-add">
-                                            <AddShoppingCartIcon />
-                                            <span>Add To Shopping Cart</span>
-                                        </button>
+                                        {this.props.cartItems.includes(card.itemId) ?
+                                            <button 
+                                                className="btn btn-primary btn-danger shopping-cart-delete"
+                                                onClick={this.removeFromShoppingCart.bind(this, card.itemId)}
+                                                >
+                                                <RemoveShoppingCartIcon />
+                                                <span>Remove From Shopping Cart</span>
+                                            </button>
+                                            :
+                                            <button 
+                                                className="btn btn-primary shopping-cart-add"
+                                                onClick={this.addToShoppingCart.bind(this, card.itemId)}
+                                                >
+                                                <AddShoppingCartIcon />
+                                                <span>Add To Shopping Cart</span>
+                                            </button>
+                                        }
                                     </CardActions>
                                 </Card>
                             ))}
