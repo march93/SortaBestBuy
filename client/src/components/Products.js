@@ -170,7 +170,8 @@ class Products extends Component {
     }
 
     addToShoppingCart(id) {
-        this.props.addToCart({id: id, quantity: 1});
+        const item = this.props.searchItemsList.filter(product => (product.itemId === id));
+        this.props.addToCart({id: id, info: item[0], quantity: 1});
 
         this.toastId = toast.success("Item added to shopping cart!", {
             position: toast.POSITION.BOTTOM_CENTER

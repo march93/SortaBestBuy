@@ -61,7 +61,7 @@ class Info extends Component {
     }
 
     addToShoppingCart(id) {
-        this.props.addToCart({id: id, quantity: 1});
+        this.props.addToCart({id: id, info: this.state.productInfo[0], quantity: 1});
 
         this.toastId = toast.success("Item added to shopping cart!", {
             position: toast.POSITION.BOTTOM_CENTER
