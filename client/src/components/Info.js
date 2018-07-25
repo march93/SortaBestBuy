@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import ReactHtmlParser from 'react-html-parser';
 
 class Info extends Component {
     constructor(props) {
@@ -11,7 +18,7 @@ class Info extends Component {
 
         this.state = {
             loading: true,
-            productInfo: {}
+            productInfo: []
         }
     }
 
@@ -27,7 +34,6 @@ class Info extends Component {
                     loading: false,
                     productInfo: response.data
                 });
-                console.log(response.data);
             })
             .catch((error) => {
                 // Toast Error
@@ -46,12 +52,53 @@ class Info extends Component {
         return (
             <div className="Info">
                 {this.state.productInfo.length > 0 ?
-                    <div>Yes</div>
+                    <div>
+                        <Card className="item-info">
+                            <CardMedia
+                                className="item-photo"
+                                image={this.state.productInfo[0].largeImage}
+                                title={this.state.productInfo[0].name}
+                            />
+                            <CardContent className="item-content">
+                                <Typography gutterBottom variant="headline" component="h2">
+                                    {this.state.productInfo[0].name}
+                                </Typography>
+                                <Typography gutterBottom variant="headline" component="h3">
+                                    Description
+                                </Typography>
+                                <Typography component="span" className="item-short-description">
+                                    {ReactHtmlParser(this.state.productInfo[0].shortDescription)}
+                                </Typography>
+                                <Typography gutterBottom variant="headline" component="h3">
+                                    Item Details
+                                </Typography>
+                                <Typography component="span" className="item-long-description">
+                                    {ReactHtmlParser(this.state.productInfo[0].longDescription)}
+                                </Typography>
+                            </CardContent>
+                            <CardActions className="item-buttons">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary back-button"
+                                >
+                                    <Link to="/">Back To Search</Link>
+                                </button>
+                                <button 
+                                    type="submit"
+                                    className="btn btn-primary add-to-cart"
+                                >
+                                    <AddShoppingCartIcon />
+                                    <span>Add To Cart</span>
+                                </button>
+                            </CardActions>
+                        </Card>
+                    </div>
                     :
                     <div className="NoInfo">
                         <span className="no-item">Product Info Unavailable</span>
                     </div>
                 }
+                <ToastContainer autoClose={3000} />
             </div>
         );
     }

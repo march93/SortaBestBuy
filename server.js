@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const WalmartAPI = '6k2qygre8hb96fd3pdb5keap';
+const decode = require('unescape');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -43,6 +44,9 @@ app.get('/api/getProductInfo', (req, res) => {
         .then(function(response) {
             // Check if there are any items
             if (response.data.items.length > 0) {
+                // Unescape HTML tags within the long/short description
+                response.data.items[0].shortDescription = decode(response.data.items[0].shortDescription);
+                response.data.items[0].longDescription = decode(response.data.items[0].longDescription);
                 res.send(response.data.items);
             } else {
                 // Send an empty array if item ID doesn't exist
