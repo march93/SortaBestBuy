@@ -64,6 +64,9 @@ class Info extends Component {
                                 <Typography gutterBottom variant="headline" component="h2">
                                     {this.state.productInfo[0].name}
                                 </Typography>
+                                <Typography variant="subheading" className="item-price">
+                                    {"$" + (this.state.productInfo[0].salePrice ? this.state.productInfo[0].salePrice : this.state.productInfo[0].msrp)}
+                                </Typography>
                                 <Typography variant="subheading" color="textSecondary">
                                     <StarRatings
                                         rating={this.state.productInfo[0].customerRating ? parseInt(this.state.productInfo[0].customerRating) : 0}
