@@ -11,21 +11,26 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ReactHtmlParser from 'react-html-parser';
 import StarRatings from 'react-star-ratings';
 import { connect } from "react-redux";
-import { addToCart, removeFromCart } from '../actions/Actions';
+import { addToCart, removeFromCart, addToWishlist, removeFromWishlist } from '../actions/Actions';
 
 const mapStateToProps = state => {
     return { 
-        cartItems: state.cartItems
+        cartItems: state.cartItems,
+        wishlist: state.wishlist
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         addToCart: item => dispatch(addToCart(item)),
-        removeFromCart: item => dispatch(removeFromCart(item))
+        removeFromCart: item => dispatch(removeFromCart(item)),
+        addToWishlist: item => dispatch(addToWishlist(item)),
+        removeFromWishlist: item => dispatch(removeFromWishlist(item))
     };
 };
 
@@ -75,6 +80,22 @@ class Info extends Component {
         });
     }
 
+    addToWishlist(id) {
+        this.props.addToWishlist(id);
+
+        this.toastId = toast.success("Item added to wishlist!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    }
+
+    removeFromWishlist(id) {
+        this.props.removeFromWishlist(id);
+
+        this.toastId = toast.success("Item removed from wishlist!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    }
+
     render() {
         // Render nothing to the screen until componentDidMount is ready
         if (this.state.loading) {
@@ -99,6 +120,19 @@ class Info extends Component {
                                 </Typography>
                                 <Typography variant="subheading" className="item-price">
                                     {"$" + (item[0].salePrice ? item[0].salePrice.toFixed(2) : item[0].msrp.toFixed(2))}
+                                </Typography>
+                                <Typography className="item-favorite">
+                                    {this.props.wishlist.includes(item[0].itemId) ? 
+                                        <FavoriteIcon
+                                            className="favorite"
+                                            onClick={this.removeFromWishlist.bind(this, item[0].itemId)}
+                                        />
+                                        :
+                                        <FavoriteBorderIcon
+                                            className="unfavorite"
+                                            onClick={this.addToWishlist.bind(this, item[0].itemId)}
+                                        />
+                                    }
                                 </Typography>
                                 <Typography variant="subheading" color="textSecondary">
                                     <StarRatings

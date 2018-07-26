@@ -64,7 +64,7 @@
     margin-top: 10px;
 }
 
-.favorite {
+.favorite, .unfavorite {
     color: red !important;
 }
 

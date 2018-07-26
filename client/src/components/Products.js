@@ -289,6 +289,7 @@ class Products extends Component {
                                                 />
                                                 :
                                                 <FavoriteBorderIcon
+                                                    className="unfavorite"
                                                     onClick={this.addToWishlist.bind(this, card.itemId)}
                                                 />
                                             }

@@ -21,6 +21,14 @@
     font-weight: 700 !important;
 }
 
+.item-favorite {
+    margin-top: 20px !important;
+}
+
+.item-favorite .favorite, .item-favorite .unfavorite {
+    cursor: pointer;
+}
+
 .item-short-description {
     margin-top: 20px !important;
     padding: 0 10px;
