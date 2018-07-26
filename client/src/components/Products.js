@@ -197,7 +197,8 @@ class Products extends Component {
     }
 
     addToWishlist(id) {
-        this.props.addToWishlist(id);
+        const item = this.props.searchItemsList.filter(product => (product.itemId === id));
+        this.props.addToWishlist({id: id, info: item[0]});
 
         this.toastId = toast.success("Item added to wishlist!", {
             position: toast.POSITION.BOTTOM_CENTER
@@ -282,7 +283,7 @@ class Products extends Component {
                                     />
                                     <CardActions className="product-actions" disableActionSpacing>
                                         <IconButton aria-label="Add to favorites">
-                                            {this.props.wishlist.includes(card.itemId) ? 
+                                            {this.props.wishlist.filter(product => (product.id === card.itemId)).length > 0 ? 
                                                 <FavoriteIcon
                                                     className="favorite"
                                                     onClick={this.removeFromWishlist.bind(this, card.itemId)}

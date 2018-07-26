@@ -81,7 +81,7 @@ class Info extends Component {
     }
 
     addToWishlist(id) {
-        this.props.addToWishlist(id);
+        this.props.addToWishlist({id: id, info: this.state.productInfo[0]});
 
         this.toastId = toast.success("Item added to wishlist!", {
             position: toast.POSITION.BOTTOM_CENTER
@@ -121,8 +121,8 @@ class Info extends Component {
                                 <Typography variant="subheading" className="item-price">
                                     {"$" + (item[0].salePrice ? item[0].salePrice.toFixed(2) : item[0].msrp.toFixed(2))}
                                 </Typography>
-                                <Typography className="item-favorite">
-                                    {this.props.wishlist.includes(item[0].itemId) ? 
+                                <Typography className="item-favorite"> 
+                                    {this.props.wishlist.filter(product => (product.id === item[0].itemId)).length > 0 ? 
                                         <FavoriteIcon
                                             className="favorite"
                                             onClick={this.removeFromWishlist.bind(this, item[0].itemId)}
