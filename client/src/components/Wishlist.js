@@ -66,7 +66,7 @@ class Wishlist extends Component {
                 {this.props.wishlist.length > 0 ?
                     <div>
                         <h2 className="wishlist-title">
-                            Wishlist: {this.props.wishlist.length} items
+                            Wishlist: {this.props.wishlist.length} {this.props.wishlist.length === 1 ? "item" : "items"}
                         </h2>
                         <Paper className="wishlist-container">
                             <div className="wishlist-div">

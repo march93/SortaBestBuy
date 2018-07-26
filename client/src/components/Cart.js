@@ -81,7 +81,7 @@ class Cart extends Component {
                 {this.props.cartItems.length > 0 ?
                     <div>
                         <h2 className="cart-title">
-                            Shopping Cart: {this.props.cartItems.length} items
+                            Shopping Cart: {this.props.cartItems.length} {this.props.cartItems.length === 1 ? "item" : "items"}
                         </h2>
                         <Paper className="cart-container">
                             <div className="cart-div">
