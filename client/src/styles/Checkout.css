@@ -1,0 +1,47 @@
+.Checkout {
+    min-width: 900px;
+}
+
+.checkout-title {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+.checkout-paper {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 10px 0;
+}
+
+.checkout-form .form-group {
+    width: 75%;
+    margin: 10px auto;
+}
+
+.EmptyCheckout {
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.EmptyCheckout button > a {
+    color: #FFF;
+}
+
+.EmptyCheckout button > a:hover {
+    text-decoration: none;
+}
+
+.no-item {
+    font-size: 30px;
+    font-weight: bold;
+}
