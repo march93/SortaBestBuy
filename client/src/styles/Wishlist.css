@@ -1,0 +1,65 @@
+.Wishlist {
+    min-width: 900px;
+}
+
+.wishlist-container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.wishlist-title {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+.delete-item {
+    cursor: pointer;
+}
+
+.item-image {
+    margin: 20px 0;
+}
+
+.item-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.item-increment, .item-decrement {
+    border-radius: 10px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: grey;
+    opacity: 0.6;
+    color: #FFF;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.item-total {
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.EmptyWishlist {
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.EmptyWishlist button > a {
+    color: #FFF;
+}
+
+.EmptyWishlist button > a:hover {
+    text-decoration: none;
+}
+
+.no-item {
+    font-size: 30px;
+    font-weight: bold;
+}

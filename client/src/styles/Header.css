@@ -14,7 +14,7 @@
     opacity: 0.75;
 }
 
-.cart-badge {
+.cart-badge, .wishlist-badge {
     border: 1px solid #FFF;
     position: relative;
     top: -1px;

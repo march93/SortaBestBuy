@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 
 const mapStateToProps = state => {
     return { 
-        cartItems: state.cartItems
+        cartItems: state.cartItems,
+        wishlist: state.wishlist
     };
 };
 
@@ -22,6 +23,9 @@ class Header extends Component {
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
                             <Link to="/" className="nav-link">Search Products</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/wishlist" className="nav-link">Wishlist <span className="badge wishlist-badge">{this.props.wishlist.length}</span></Link>
                         </li>
                         <li className="nav-item">
                             <Link to="/cart" className="nav-link">Cart <span className="badge cart-badge">{this.props.cartItems.length}</span></Link>
