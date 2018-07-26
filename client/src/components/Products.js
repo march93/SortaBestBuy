@@ -90,7 +90,9 @@ class Products extends Component {
                 this.props.blockNext(response.data.nextPageDisable);
             })
             .catch((error) => {
-                console.log(error);
+                this.toastId = toast.error(error, {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
             });
     }
 
@@ -121,7 +123,9 @@ class Products extends Component {
                     this.prevDisable = false;
                 })
                 .catch((error) => {
-                    console.log(error);
+                    this.toastId = toast.error(error, {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    });
                 });
         }
     }
@@ -153,7 +157,9 @@ class Products extends Component {
                     this.nextDisable = false;
                 })
                 .catch((error) => {
-                    console.log(error);
+                    this.toastId = toast.error(error, {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    });
                 });
         }
     }
