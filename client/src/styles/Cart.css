@@ -1,3 +1,8 @@
+.cart-container {
+    width: 90%;
+    margin: 20px auto;
+}
+
 .cart-title {
     text-align: center;
     margin: 20px 0;

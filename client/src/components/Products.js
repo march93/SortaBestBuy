@@ -255,10 +255,10 @@ class Products extends Component {
                                         title={card.name}
                                     />
                                     <CardActions className="product-actions" disableActionSpacing>
-                                        <IconButton aria-label="Add to favorites">
+                                        <IconButton aria-label="Add to favorites"> {/* Use Material UI Selection Controls */}
                                             <FavoriteIcon />
                                         </IconButton>
-                                        <IconButton aria-label="Share">
+                                        <IconButton aria-label="Get Product Info">
                                             <InfoIcon
                                                 onClick={this.getInfo.bind(this, card.itemId)}
                                             />

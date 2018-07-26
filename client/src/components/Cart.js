@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { connect } from "react-redux";
-import { addToCart, removeFromCart } from '../actions/Actions';
+import { removeFromCart } from '../actions/Actions';
+import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Clear';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
 
 const mapStateToProps = state => {
     return { 
@@ -23,7 +31,8 @@ class Cart extends Component {
         super(props);
 
         this.state = {
-
+            page: 0,
+            rowsPerPage: 10
         }
     }
 
@@ -35,7 +44,24 @@ class Cart extends Component {
         });
     }
 
+    onChangePage(event, page) {
+        this.setState({
+            page
+        });
+    }
+
+    onChangeRowsPerPage(event) {
+        this.setState({
+            rowsPerPage: event.target.value
+        });
+    }
+
     render() {
+        console.log(this.props.cartItems);
+        const data = this.props.cartItems;
+        const page = this.state.page;
+        const rowsPerPage = this.state.rowsPerPage;
+
         return (
             <div className="Cart">
                 {this.props.cartItems.length > 0 ?
@@ -43,10 +69,39 @@ class Cart extends Component {
                         <h2 className="cart-title">
                             Shopping Cart: {this.props.cartItems.length} items
                         </h2>
-                        {this.props.cartItems.map(item => (
-                            <div>
+                        <Paper className="cart-container">
+                            <div className="cart-div">
+                                <Table className="cart-table">
+                                    <TableBody>
+                                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                                            return (
+                                            <TableRow key={n.id}>
+                                                <TableCell component="th" scope="row">
+                                                    <DeleteIcon />
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    <img src={n.info.thumbnailImage} />
+                                                </TableCell>
+                                                <TableCell numeric>{n.info.name}</TableCell>
+                                            </TableRow>
+                                            );
+                                        })}
+                                    </TableBody>
+                                    <TableFooter>
+                                        <TableRow>
+                                            <TablePagination
+                                                colSpan={3}
+                                                count={data.length}
+                                                rowsPerPage={rowsPerPage}
+                                                page={page}
+                                                onChangePage={this.onChangePage.bind(this)}
+                                                onChangeRowsPerPage={this.onChangeRowsPerPage.bind(this)}
+                                                />
+                                        </TableRow>
+                                    </TableFooter>
+                                </Table>
                             </div>
-                        ))}
+                        </Paper>
                     </div>
                     :
                     <div className="EmptyCart">
