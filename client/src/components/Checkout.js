@@ -48,18 +48,12 @@ class Checkout extends Component {
                         <Paper className="checkout-paper">
                             <form className="checkout-form">
                                 <div className="form-group row">
-                                    <label htmlFor="inputFirstName" className="col-sm-3 col-form-label">First Name</label>
+                                    <label htmlFor="inputName" className="col-sm-3 col-form-label">Name</label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputFirstName" placeholder="First Name" />
+                                        <input type="text" className="form-control" id="inputName" placeholder="Name" />
                                     </div>
                                 </div>
-                                <div className="form-group row">
-                                    <label htmlFor="inputLastName" className="col-sm-3 col-form-label">Last Name</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputLastName" placeholder="Last Name" />
-                                    </div>
-                                </div>
-                                <div className="form-group row">
+                                {/* <div className="form-group row">
                                     <label htmlFor="inputEmail" className="col-sm-3 col-form-label">Email</label>
                                     <div className="col-sm-8">
                                         <input type="email" className="form-control" id="inputEmail" placeholder="Email" />
@@ -106,13 +100,7 @@ class Checkout extends Component {
                                     <div className="col-sm-8">
                                         <input type="text" className="form-control" id="inputPostalCode" placeholder="Postal Code" />
                                     </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label htmlFor="inputCardName" className="col-sm-3 col-form-label">Name on Card</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputCardName" placeholder="Card Holder's Name" />
-                                    </div>
-                                </div>
+                                </div> */}
                                 <div className="form-group row">
                                     <label htmlFor="inputCreditCard" className="col-sm-3 col-form-label">Card Number</label>
                                     <div className="col-sm-8">
