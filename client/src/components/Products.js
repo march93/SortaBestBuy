@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../styles/Products.css';
 import axios from 'axios';
 import { connect } from "react-redux";
-import { searchValue, searchItems, changePage, blockNext, addToCart, removeFromCart } from '../actions/Actions';
+import { searchValue, searchItems, changePage, blockNext, addToCart, removeFromCart, addToWishlist, removeFromWishlist } from '../actions/Actions';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,6 +11,7 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import InfoIcon from '@material-ui/icons/Info';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
@@ -25,7 +26,8 @@ const mapStateToProps = state => {
         searchItemsList: state.searchItemsList,
         startPage: state.startPage,
         isNextBlocked: state.isNextBlocked,
-        cartItems: state.cartItems
+        cartItems: state.cartItems,
+        wishlist: state.wishlist
     };
 };
 
@@ -36,7 +38,9 @@ const mapDispatchToProps = dispatch => {
         changePage: page => dispatch(changePage(page)),
         blockNext: block => dispatch(blockNext(block)),
         addToCart: item => dispatch(addToCart(item)),
-        removeFromCart: item => dispatch(removeFromCart(item))
+        removeFromCart: item => dispatch(removeFromCart(item)),
+        addToWishlist: item => dispatch(addToWishlist(item)),
+        removeFromWishlist: item => dispatch(removeFromWishlist(item))
     };
 };
 
@@ -186,6 +190,22 @@ class Products extends Component {
         });
     }
 
+    addToWishlist(id) {
+        this.props.addToWishlist(id);
+
+        this.toastId = toast.success("Item added to wishlist!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    }
+
+    removeFromWishlist(id) {
+        this.props.removeFromWishlist(id);
+
+        this.toastId = toast.success("Item removed from wishlist!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    }
+
     render() {
         return (
             <div className="Products">
@@ -241,7 +261,7 @@ class Products extends Component {
                                         </Typography>
                                         <Typography variant="subheading" color="textSecondary">
                                             <StarRatings
-                                                rating={card.customerRating ? parseInt(card.customerRating) : 0}
+                                                rating={card.customerRating ? parseInt(card.customerRating, 10) : 0}
                                                 starRatedColor="blue"
                                                 numberOfStars={5}
                                                 starDimension="20px"
@@ -255,8 +275,17 @@ class Products extends Component {
                                         title={card.name}
                                     />
                                     <CardActions className="product-actions" disableActionSpacing>
-                                        <IconButton aria-label="Add to favorites"> {/* Use Material UI Selection Controls */}
-                                            <FavoriteIcon />
+                                        <IconButton aria-label="Add to favorites">
+                                            {this.props.wishlist.includes(card.itemId) ? 
+                                                <FavoriteIcon
+                                                    className="favorite"
+                                                    onClick={this.removeFromWishlist.bind(this, card.itemId)}
+                                                />
+                                                :
+                                                <FavoriteBorderIcon
+                                                    onClick={this.addToWishlist.bind(this, card.itemId)}
+                                                />
+                                            }
                                         </IconButton>
                                         <IconButton aria-label="Get Product Info">
                                             <InfoIcon

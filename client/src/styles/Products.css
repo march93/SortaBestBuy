@@ -64,6 +64,10 @@
     margin-top: 10px;
 }
 
+.favorite {
+    color: red !important;
+}
+
 .shopping-cart-add, .shopping-cart-delete {
     display: flex;
     margin-left: auto !important;

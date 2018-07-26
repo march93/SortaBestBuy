@@ -97,7 +97,11 @@ class Cart extends Component {
                                                     />
                                                 </TableCell>
                                                 <TableCell>
-                                                    <img src={n.info.thumbnailImage} className="item-image" />
+                                                    <img
+                                                        src={n.info.thumbnailImage}
+                                                        alt={n.info.name}
+                                                        className="item-image"
+                                                    />
                                                 </TableCell>
                                                 <TableCell>
                                                     <span className="item-name">

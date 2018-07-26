@@ -103,7 +103,7 @@ class Info extends Component {
                                 </Typography>
                                 <Typography variant="subheading" color="textSecondary">
                                     <StarRatings
-                                        rating={item[0].customerRating ? parseInt(item[0].customerRating) : 0}
+                                        rating={item[0].customerRating ? parseInt(item[0].customerRating, 10) : 0}
                                         starRatedColor="blue"
                                         numberOfStars={5}
                                         starDimension="20px"
