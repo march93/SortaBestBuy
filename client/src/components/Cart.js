@@ -125,7 +125,7 @@ class Cart extends Component {
                                                 </TableCell>
                                                 <TableCell numeric>
                                                     <span className="item-price">
-                                                        {"$" + (n.info.salePrice ? (n.info.salePrice * n.quantity) : (n.info.msrp * n.quantity))}
+                                                        {"$" + (n.info.salePrice ? (n.info.salePrice * n.quantity).toFixed(2) : (n.info.msrp * n.quantity).toFixed(2))}
                                                     </span>
                                                 </TableCell>
                                             </TableRow>

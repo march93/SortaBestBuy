@@ -237,7 +237,7 @@ class Products extends Component {
                                     />
                                     <CardContent className="product-content">
                                         <Typography variant="subheading" className="product-price">
-                                            {"$" + (card.salePrice ? card.salePrice : card.msrp)}
+                                            {"$" + (card.salePrice ? card.salePrice.toFixed(2) : card.msrp.toFixed(2))}
                                         </Typography>
                                         <Typography variant="subheading" color="textSecondary">
                                             <StarRatings

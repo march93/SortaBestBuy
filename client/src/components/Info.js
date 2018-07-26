@@ -99,7 +99,7 @@ class Info extends Component {
                                     {item[0].name}
                                 </Typography>
                                 <Typography variant="subheading" className="item-price">
-                                    {"$" + (item[0].salePrice ? item[0].salePrice : item[0].msrp)}
+                                    {"$" + (item[0].salePrice ? item[0].salePrice.toFixed(2) : item[0].msrp.toFixed(2))}
                                 </Typography>
                                 <Typography variant="subheading" color="textSecondary">
                                     <StarRatings
