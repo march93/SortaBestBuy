@@ -13,8 +13,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 
 const mapStateToProps = state => {
     return {
