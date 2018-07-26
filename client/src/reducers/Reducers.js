@@ -24,7 +24,7 @@ const rootReducer = (state = initialState, action) => {
             // Return shallow copy of current array without the matching item ID 
             return { ...state, cartItems: [...state.cartItems.filter((elem, idx) => {
                 return elem.id !== action.payload;
-            })]}
+            })]};
         default:
             return state;
     }

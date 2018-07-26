@@ -77,7 +77,10 @@ class Cart extends Component {
                                             return (
                                             <TableRow key={n.id}>
                                                 <TableCell component="th" scope="row">
-                                                    <DeleteIcon />
+                                                    <DeleteIcon
+                                                        className="delete-item"
+                                                        onClick={this.removeFromShoppingCart.bind(this, n.id)}
+                                                    />
                                                 </TableCell>
                                                 <TableCell numeric>
                                                     <img src={n.info.thumbnailImage} />

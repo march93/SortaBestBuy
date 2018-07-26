@@ -9,6 +9,10 @@
     font-weight: 700;
 }
 
+.delete-item {
+    cursor: pointer;
+}
+
 .EmptyCart {
     width: 90%;
     text-align: center;
