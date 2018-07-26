@@ -75,17 +75,33 @@ class Cart extends Component {
                                     <TableBody>
                                         {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                                             return (
-                                            <TableRow key={n.id}>
+                                            <TableRow key={n.id} className="item-row">
                                                 <TableCell component="th" scope="row">
                                                     <DeleteIcon
                                                         className="delete-item"
                                                         onClick={this.removeFromShoppingCart.bind(this, n.id)}
                                                     />
                                                 </TableCell>
-                                                <TableCell numeric>
-                                                    <img src={n.info.thumbnailImage} />
+                                                <TableCell>
+                                                    <img src={n.info.thumbnailImage} className="item-image" />
                                                 </TableCell>
-                                                <TableCell numeric>{n.info.name}</TableCell>
+                                                <TableCell>
+                                                    <span className="item-name">
+                                                        {n.info.name}
+                                                    </span>
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    <div className="item-quantity">
+                                                        <button className="item-increment">+</button>
+                                                        <span className="item-total">{n.quantity}</span>
+                                                        <button className="item-decrement">+</button>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    <span className="item-price">
+                                                        {"$" + (n.info.salePrice ? n.info.salePrice : n.info.msrp)}
+                                                    </span>
+                                                </TableCell>
                                             </TableRow>
                                             );
                                         })}
@@ -93,7 +109,7 @@ class Cart extends Component {
                                     <TableFooter>
                                         <TableRow>
                                             <TablePagination
-                                                colSpan={3}
+                                                colSpan={5}
                                                 count={data.length}
                                                 rowsPerPage={rowsPerPage}
                                                 page={page}
