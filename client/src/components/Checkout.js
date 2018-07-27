@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import '../styles/Checkout.css';
+import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { connect } from "react-redux";
+import { clearCartItems } from '../actions/Actions';
 import Paper from '@material-ui/core/Paper';
-// import { clearCartItems } from '../actions/Actions';
 
 const mapStateToProps = state => {
     return {
@@ -15,7 +16,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // clearCartItems: item => dispatch(clearCartItems(item))
+        clearCartItems: item => dispatch(clearCartItems(item))
     };
 };
 
@@ -24,19 +25,97 @@ class Checkout extends Component {
         super(props);
 
         this.state = {
-
+            name: "",
+            number: "",
+            expiry: "",
+            cvv: ""
         }
     }
 
-    clearCart(id) {
-        // this.props.clearCart([]);
+    onNameChange(event) {
+        this.setState({
+            name: event.target.value
+        });
+    }
 
-        // this.toastId = toast.success("", {
-        //     position: toast.POSITION.BOTTOM_CENTER
-        // });
+    onNumberChange(event) {
+        this.setState({
+            number: event.target.value
+        });
+    }
+
+    onExpiryChange(event) {
+        this.setState({
+            expiry: event.target.value
+        });
+    }
+
+    onCVVChange(event) {
+        this.setState({
+            cvv: event.target.value
+        });
+    }
+
+    submitPayment(event) {
+        // Prevent page refresh
+        event.preventDefault();
+
+        // get payment total
+        let price = 0;
+        this.props.cartItems.forEach(item => {
+            if (item.info.salePrice) {
+                price += item.info.salePrice * item.quantity;
+            } else {
+                price += item.info.msrp * item.quantity;
+            }
+        });
+        
+        // Submit card details
+        axios.post('/api/checkoutItems', {
+              name: this.state.name,
+              number: this.state.number,
+              expiry: this.state.expiry,
+              cvv: this.state.cvv,
+              price: price * 100
+            })
+            .then((response) => {
+                if (response.data === 'succeeded') {
+                    // Charge succeeded
+                    this.toastId = toast.success("Transaction successfully completed!", {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    });
+
+                    // Clear cart contents if charge is successful
+                    this.clearCart();
+                } else {
+                    this.toastId = toast.error("Transaction could not be completed!", {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    });
+                }
+            })
+            .catch((error) => {
+                this.toastId = toast.error("Could not complete transaction.", {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+            });
+    }
+
+    clearCart() {
+        // Set cart to empty
+        this.props.clearCartItems([]);
     }
 
     render() {
+        // get payment total
+        let price = 0;
+        this.props.cartItems.forEach(item => {
+            if (item.info.salePrice) {
+                price += item.info.salePrice * item.quantity;
+            } else {
+                price += item.info.msrp * item.quantity;
+            }
+        });
+
         return (
             <div className="Checkout">
                 {this.props.cartItems.length > 0 ?
@@ -50,78 +129,64 @@ class Checkout extends Component {
                                 <div className="form-group row">
                                     <label htmlFor="inputName" className="col-sm-3 col-form-label">Name</label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputName" placeholder="Name" />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="inputName"
+                                            placeholder="Name"
+                                            defaultValue={this.state.name}
+                                            onChange={this.onNameChange.bind(this)}
+                                        />
                                     </div>
                                 </div>
-                                {/* <div className="form-group row">
-                                    <label htmlFor="inputEmail" className="col-sm-3 col-form-label">Email</label>
-                                    <div className="col-sm-8">
-                                        <input type="email" className="form-control" id="inputEmail" placeholder="Email" />
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label htmlFor="inputCountry" className="col-sm-3 col-form-label">Country</label>
-                                    <div className="col-sm-8">
-                                        <select id="inputCountry" className="form-control">
-                                            <option defaultValue>Choose...</option>
-                                            <option>Canada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label htmlFor="inputProvince" className="col-sm-3 col-form-label">Province</label>
-                                    <div className="col-sm-8">
-                                        <select id="inputProvince" className="form-control">
-                                            <option defaultValue>Choose...</option>
-                                            <option>Alberta</option>
-                                            <option>British Columbia</option>
-                                            <option>Manitoba</option>
-                                            <option>New Brunswick</option>
-                                            <option>Newfoundland and Labrador</option>
-                                            <option>Northwest Territories</option>
-                                            <option>Nova Scotia</option>
-                                            <option>Nunavut</option>
-                                            <option>Ontario</option>
-                                            <option>Prince Edward Island</option>
-                                            <option>Quebec</option>
-                                            <option>Saskatchewan</option>
-                                            <option>Yukon</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label htmlFor="inputCity" className="col-sm-3 col-form-label">City</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputCity" placeholder="City" />
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label htmlFor="inputPostalCode" className="col-sm-3 col-form-label">Postal Code</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputPostalCode" placeholder="Postal Code" />
-                                    </div>
-                                </div> */}
                                 <div className="form-group row">
                                     <label htmlFor="inputCreditCard" className="col-sm-3 col-form-label">Card Number</label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputCreditCard" placeholder="Credit Card Number" />
+                                        <input
+                                            type="tel"
+                                            className="form-control"
+                                            id="inputCreditCard"
+                                            placeholder="Credit Card Number"
+                                            defaultValue={this.state.number}
+                                            onChange={this.onNumberChange.bind(this)}
+                                        />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="inputExpiry" className="col-sm-3 col-form-label">Expiration Date</label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputExpiry" placeholder="MM/YYYY" />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="inputExpiry"
+                                            placeholder="MM/YYYY"
+                                            defaultValue={this.state.expiry}
+                                            onChange={this.onExpiryChange.bind(this)}
+                                        />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="inputCVV" className="col-sm-3 col-form-label">Card CVV</label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="inputCVV" placeholder="Security Code" />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="inputCVV"
+                                            placeholder="Security Code"
+                                            defaultValue={this.state.cvv}
+                                            onChange={this.onCVVChange.bind(this)}
+                                        />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="col-sm-8">
-                                        <button type="submit" className="btn btn-primary">Pay</button>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary"
+                                            onClick={this.submitPayment.bind(this)}
+                                            >
+                                            {"Pay $" + price}
+                                        </button>
                                     </div>
                                 </div>
                             </form>

@@ -1,10 +1,16 @@
 const express = require('express');
 const axios = require('axios');
+const bodyParser = require('body-parser');
 const WalmartAPI = '6k2qygre8hb96fd3pdb5keap';
 const decode = require('unescape');
 
 const app = express();
 const port = process.env.PORT || 5000;
+const secret_key = 'sk_test_JfkVnrHHZnKKFkBPZdpUGGiG';
+const stripe = require("stripe")(secret_key);
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get('/api/getProducts', (req, res) => {
     axios.get('http://api.walmartlabs.com/v1/search', {
@@ -56,6 +62,33 @@ app.get('/api/getProductInfo', (req, res) => {
         .catch(function(error) {
             console.log(error);
         });
+});
+
+app.post('/api/checkoutItems', (req, res) => {
+    // Get token with credit card provided
+    stripe.tokens.create({
+        card: {
+          "number": req.body.number,
+          "exp_month": parseInt(req.body.expiry.substring(0, 2), 10),
+          "exp_year": parseInt(req.body.expiry.substring(3), 10),
+          "cvc": req.body.cvv
+        }
+    })
+    .then(response =>
+        // Charge credit card
+        stripe.charges.create({
+            amount: parseInt(req.body.price, 10),
+            currency: "cad",
+            source: response.id,
+            description: "Charge for " + req.body.name
+        }))
+    .then(charge =>
+        // Send back status of charge
+        res.send(charge.status)
+    )
+    .catch(function(error) {
+        console.log(error);
+    });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

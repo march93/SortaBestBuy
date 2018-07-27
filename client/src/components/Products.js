@@ -90,7 +90,7 @@ class Products extends Component {
                 this.props.blockNext(response.data.nextPageDisable);
             })
             .catch((error) => {
-                this.toastId = toast.error(error, {
+                this.toastId = toast.error("Could not get products.", {
                     position: toast.POSITION.BOTTOM_CENTER
                 });
             });
@@ -123,7 +123,7 @@ class Products extends Component {
                     this.prevDisable = false;
                 })
                 .catch((error) => {
-                    this.toastId = toast.error(error, {
+                    this.toastId = toast.error("Could not get products.", {
                         position: toast.POSITION.BOTTOM_CENTER
                     });
                 });
@@ -157,7 +157,7 @@ class Products extends Component {
                     this.nextDisable = false;
                 })
                 .catch((error) => {
-                    this.toastId = toast.error(error, {
+                    this.toastId = toast.error("Could not get products.", {
                         position: toast.POSITION.BOTTOM_CENTER
                     });
                 });

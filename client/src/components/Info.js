@@ -58,7 +58,7 @@ class Info extends Component {
                 });
             })
             .catch((error) => {
-                toast.error(error, {
+                toast.error("Could not get product info.", {
                     position: toast.POSITION.BOTTOM_LEFT
                 });
             });

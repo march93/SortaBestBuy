@@ -5,6 +5,7 @@ import {
     BLOCK_NEXT,
     ADD_TO_CART,
     REMOVE_FROM_CART,
+    CLEAR_CART,
     UPDATE_ITEM_QUANTITY,
     ADD_TO_WISHLIST,
     REMOVE_FROM_WISHLIST
@@ -36,6 +37,8 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, cartItems: [...state.cartItems.filter((elem, idx) => {
                 return elem.id !== action.payload;
             })]};
+        case CLEAR_CART:
+            return { ...state, cartItems: action.payload };
         case UPDATE_ITEM_QUANTITY:
             // Get the index of the item we want to update
             const index = state.cartItems.findIndex(item => item.id === action.payload.id);
