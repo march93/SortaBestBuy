@@ -185,7 +185,7 @@ class Checkout extends Component {
                                             className="btn btn-primary"
                                             onClick={this.submitPayment.bind(this)}
                                             >
-                                            {"Pay $" + price}
+                                            {"Pay $" + price.toFixed(2)}
                                         </button>
                                     </div>
                                 </div>
