@@ -29,4 +29,4 @@ The app makes heavy use of Bootstrap and Material UI for the interface. This cut
 
 ## Deployment
 
-The app is currently deployed on Heroku. You can access it here: https://sortabestbuy.herokuapp.com/checkout
+The app is currently deployed on Heroku. You can access it here: https://sortabestbuy.herokuapp.com
