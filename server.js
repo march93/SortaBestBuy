@@ -1,13 +1,13 @@
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
-const WalmartAPI = '6k2qygre8hb96fd3pdb5keap';
+const WalmartAPI = process.env.WalmartApiKey;
 const decode = require('unescape');
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5000;
-const secret_key = 'sk_test_JfkVnrHHZnKKFkBPZdpUGGiG';
+const secret_key = process.env.StripeSecretKey;
 const stripe = require("stripe")(secret_key);
 
 app.use(bodyParser.json()); // for parsing application/json
